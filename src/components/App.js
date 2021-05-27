@@ -1,10 +1,11 @@
 import React from 'react';
-import Signup from './Signup';
-import Dashboard from './Dashboard';
-import Login from './Login';
-import ResetPassword from './ResetPassword';
-import UpdateProfile from './UpdateProfile';
-import CreateSurvey from './CreateSurvey';
+import Signup from './User/Signup';
+import Dashboard from './User/Dashboard';
+import Login from './User/Login';
+import ResetPassword from './User/ResetPassword';
+import UpdateProfile from './User/UpdateProfile';
+import CreateSurvey from './Survey/CreateSurvey';
+import PreCreateSurvey from './Survey/PreCreateSurvey';
 import PrivateRoute from './PrivateRoute';
 import { Container } from 'react-bootstrap';
 import { AuthProvider } from '../contexts/AuthContext';
@@ -21,7 +22,11 @@ function App() {
 					<AuthProvider>
 						<Switch>
 							<PrivateRoute exact path='/' component={Dashboard} />
-							<PrivateRoute path='/create-survey' component={CreateSurvey} />
+							<PrivateRoute
+								path='/create-survey/:title'
+								component={CreateSurvey}
+							/>
+							<PrivateRoute path='/create-survey' component={PreCreateSurvey} />
 							<PrivateRoute path='/update-profile' component={UpdateProfile} />
 							<Route path='/register' component={Signup} />
 							<Route path='/login' component={Login} />

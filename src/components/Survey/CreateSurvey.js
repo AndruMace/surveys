@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import Question from './Question';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useAuth } from '../contexts/AuthContext';
-import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { Link, useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 export default function CreateSurvey() {
@@ -35,32 +35,30 @@ export default function CreateSurvey() {
 		setNumQuestions((prevNumQuestions) => prevNumQuestions + 1);
 	}
 
+	let { title } = useParams();
+
 	return (
 		<>
+			<div>
+				<h4>ToDo</h4>
+				<ul>
+					<del>
+						<li>Add Question & Answer ID's</li>
+					</del>
+					<del>
+						<li>Switch to useReducer for answer state</li>
+					</del>
+					<li>Fix duplication of last answer choice when saving questions</li>
+					<li>Stylistic Changes</li>
+					<li>Add firestore to save surveys</li>
+				</ul>
+			</div>
 			<Card>
 				<Card.Body>
-					<h2 className='text-center mb-4'>Create Survey</h2>
-					<div>
-						<h4>ToDo</h4>
-						<ul>
-							<del>
-								<li>Add Question & Answer ID's</li>
-							</del>
-							<li>Switch to useReducer for answer state</li>
-							<li>
-								Fix duplication of last answer choice when saving questions
-							</li>
-							<li>Stylistic Changes</li>
-							<li>Add firestore to save surveys</li>
-						</ul>
-					</div>
 					{error && <Alert variant='danger'>{error}</Alert>}
 					{message && <Alert variant='success'>{message}</Alert>}
+					<h2>{title}</h2>
 					<Form onSubmit={handleSubmit}>
-						<Form.Group id='title'>
-							<Form.Label>Survey Title</Form.Label>
-							<Form.Control type='text' required />
-						</Form.Group>
 						{Array.from({ length: numQuestions }).map((question) => (
 							<Question key={uuid()} />
 						))}

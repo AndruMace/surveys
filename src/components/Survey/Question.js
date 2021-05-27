@@ -5,11 +5,13 @@ import Answer from './Answer';
 import { v4 as uuid } from 'uuid';
 
 export default function Question() {
-	const [answerState, dispatch] = useReducer(reducer, {
-		numAnswers: 0,
-		answerType: 'plain text',
-		answerContent: '',
-	});
+	const [answerState, dispatch] = useReducer(reducer, [
+		{
+			numAnswers: 0,
+			answerType: 'plain text',
+			answerContent: '',
+		},
+	]);
 
 	const [isSaved, setIsSaved] = useState(false);
 	const inputRef = useRef();
@@ -17,11 +19,11 @@ export default function Question() {
 	function reducer(answerState, action) {
 		switch (action.type) {
 			case 'add answer':
-				return { numAnswers: answerState.numAnswers + 1 };
+				return { ...answerState, numAnswers: answerState.numAnswers + 1 };
 			case 'answer type changed':
-				return { answerType: action.payload };
+				return { ...answerState, answerType: action.payload };
 			case 'answer content updated':
-				return { answerContent: action.payload };
+				return { ...answerState, answerContent: action.payload };
 			default:
 				throw new Error();
 		}
@@ -45,6 +47,13 @@ export default function Question() {
 	}
 
 	function saveQuestion() {
+		console.info(`
+		Answer Information :::
+		numAnswers: ${answerState.numAnswers}
+		answerType: ${answerState.answerType}
+		answerContent: ${answerState.answerContent}
+		--FIN--
+		`);
 		setIsSaved(true);
 	}
 
